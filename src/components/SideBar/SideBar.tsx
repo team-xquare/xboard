@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import github from '../../libs/api/organization';
 
-const XBoard = () => {
+const SideBar = () => {
     const [ data, setData ] = useState<any>([]);
 
     useEffect(() => {
@@ -26,4 +26,4 @@ const XBoard = () => {
     )
 }
 
-export default XBoard;
+export default SideBar;
