@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import * as S from './styles';
 import github from '../../libs/api/organization';
 
 const SideBar = () => {
@@ -15,13 +16,9 @@ const SideBar = () => {
 
     return (
         <>
-            {
-                data.map((data) => {
-                    return (
-                        <div>{data.name}</div>
-                    )
-                })
-            }
+            <S.SideBarWrapper>
+                asdwasd
+            </S.SideBarWrapper>
         </>
     )
 }
