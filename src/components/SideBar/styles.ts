@@ -3,6 +3,7 @@ import {globalColor} from '../../styles/globalColor'
 
 export const SideBarWrapper = styled.div`
     width: 300px;
+    min-width: 300px;
     height: 100vh;
     overflow: auto;
     background-color: ${globalColor.gray};
