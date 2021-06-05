@@ -17,7 +17,10 @@ export default {
     getReposProject(){
         return request({
             url: `/orgs/${org}/projects`,
-            method: "get"
+            method: "get",
+            headers : {
+                "Accept" : "application/vnd.github.inertia-preview+json",
+            }
         })
     }
 }
