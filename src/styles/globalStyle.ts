@@ -2,6 +2,9 @@ import { css } from "@emotion/react";
 
 export const globalStyle = css`
   @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+  #root{
+    height: 100%;
+  }
   *{
     margin: 0;
     padding: 0;
@@ -13,7 +16,7 @@ export const globalStyle = css`
     text-decoration: none;
   }
   body{
+    height: 100vh;
     margin: 0;
-    background: #F5F5F5;
   }
 `;
