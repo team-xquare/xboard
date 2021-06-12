@@ -23,13 +23,13 @@ export default {
             }
         })
     },
-    getReposProject(owner: string, repo_name: string){
+    getReposProject(repo_name: string){
         return request({
-            url: `/repos/${owner}/${repo_name}/projects`,
+            url: `/repos/${org}/${repo_name}/projects`,
             method: "get",
             headers: {
                 "Accept": "application/vnd.github.inertia-preview+json",
-                "Authorization" : "Bearer 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"
+                "Authorization" : "Bearer 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"
             }
         })
     }
