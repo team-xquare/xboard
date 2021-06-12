@@ -4,6 +4,7 @@ export const globalStyle = css`
   @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
   #root{
     height: 100%;
+    display: flex;
   }
   *{
     margin: 0;
