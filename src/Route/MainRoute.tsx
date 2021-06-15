@@ -6,8 +6,8 @@ function MainRoute() {
         <>
             <Router>
                 <Route path='/' component={SideBar} />
-                <Route path='/:repo_id' component={ProjectChoice} />
-                <Route path='/:repo_id/:number' component={Project} />
+                <Route path='/:repo_id' component={ProjectChoice} exact/>
+                <Route path='/:repo_id/:project_id' component={Project} exact/>
             </Router>
         </>
     )
