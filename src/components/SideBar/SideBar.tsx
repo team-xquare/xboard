@@ -4,12 +4,14 @@ import organization from '../../libs/api/organization';
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { projectIdState } from 'src/libs/atom/ProjectState/ProjectState';
 import { repoIdState} from '../../libs/atom/RepoState/RepoState'
+import { useHistory } from 'react-router-dom';
 
 const SideBar = () => {
     const [ data, setData ] = useState<any>([]);
     const setProjectId = useSetRecoilState<any>(projectIdState);
-    const SetRepoIdState = useSetRecoilState<any>(repoIdState)
+    const setRepoId = useSetRecoilState<any>(repoIdState);
     
+    const history = useHistory()
 
     useEffect(() => {
         organization.getOrgRepos()
@@ -22,18 +24,21 @@ const SideBar = () => {
     const orgProject = () => {
         organization.getOrgProject()
         .then((res) => {
-            setProjectId(res.data[0].id)
+            setProjectId(res.data)
         })
+        history.push(`/xquare-team`);
     } 
 
-    const repoProject = (owner, repo_name) => {
-        organization.getReposProject(owner, repo_name)
+    const repoProject = (repo_name: string, repo_id: string) => {
+        organization.getReposProject(repo_name)
         .then((res) => {
             if(res.data.length !== 0){
-                console.log(res.data)
-                SetRepoIdState(res.data)
+                setProjectId(res.data)
             }
         })
+        history.push(`/${repo_id}`);
+        setRepoId(repo_id)
+        //window.location.hash="/project1";
         // 레포지토리 아이디만 recoil로 넘기도록 바꿔야함
     }
 
@@ -43,11 +48,11 @@ const SideBar = () => {
                 <S.SideBarTitle> <div onClick={orgProject}>team-xquare</div></S.SideBarTitle>
                 <S.RepositoryList>
                     {
-                        data.map((data) => {
+                        data.map((data,i) => {
                             return (
                                 <S.Repository>
                                     {
-                                        <div onClick={()=>repoProject(data.owner.login, data.name)} key={data.id} >{data.name}</div>
+                                        <div onClick={()=>repoProject(data.name, data.id)} key={i} >{data.name}</div>
                                     }
                                     
                                 </S.Repository>
