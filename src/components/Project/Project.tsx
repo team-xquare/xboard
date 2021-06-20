@@ -1,22 +1,27 @@
 import { FC, useEffect, useState } from 'react';
+import { useRecoilState } from 'recoil';
 import organization from 'src/libs/api/organization';
 import projects from 'src/libs/api/projects';
+import {RouteComponentProps} from 'react-router-dom'
 import Board from './Board/Board';
 import * as S from './styles'
 
+interface Props {
+    project_id: any,
+    repo_id: any
+}
 
-const Project : FC = () => {
+const Project: FC<RouteComponentProps<Props>> = ({match}) => {
     const [columns, setColumns] = useState([])
     const [organizations, setOrganizations] = useState(null)
+
     useEffect(()=>{
-        organization.getReposProject().then((res)=>{
-            setOrganizations(res.data[0])
-            projects.getColumns(res.data[0].id).then((res)=>{
-                setColumns(res.data)
-            })
+        projects.getColumns(Number(match.params.project_id)).then((res)=>{
+            setColumns(res.data)
+            console.log(res.data)
         })
-        
-    },[])
+    },[]);
+
     return(
         <S.Wrapper>
             <S.BoardTitle>{organizations?.name}</S.BoardTitle>
