@@ -39,6 +39,7 @@ interface assignee{
     url: string
 }
 interface test{
+    card_id: string
     title : string
     body? : string
     labels? : Array<label>
@@ -51,12 +52,15 @@ const Board : FC<BoardProps> = ({title, columns_id}) => {
     const [cards, setCards] = useState<test[]>([]);
     const [state, setState] = useState<boolean>(false);
     const [note, setNote] = useState<string>(""); 
+    const [cardId, setCardId] = useState<string>("");
+
     async function getCards(res){
         const temp_array = [];
-        for(const i of res.data){
+        for(const i of res){
             if(!i.note){
                 const { data } = await repos.getIssues(i.content_url);
                 const temp : test = {
+                    card_id: i.id,
                     title : data.title,
                     body : data.body,
                     state : data.state,
@@ -64,7 +68,7 @@ const Board : FC<BoardProps> = ({title, columns_id}) => {
                     labels : data.labels,
                     creator : data.user.login
                 }
-                console.log(data)
+                console.log(temp, "ads")
                 temp_array.push(temp)
             }else{
                 temp_array.push({ title : i.note, creator : i.creator.login})
@@ -87,11 +91,22 @@ const Board : FC<BoardProps> = ({title, columns_id}) => {
     }
     useEffect(()=>{
         projects.getCards(columns_id).then(async (res)=>{
-            getCards(res)
+            getCards(res.data)
         })
     },[])
+
+    const drop = e => {
+        e.preventDefault();
+        console.log("dragEnd");
+    }
+
+    const dragOver = e => {
+        setCardId(e)
+        e.preventDefault();
+    }
+
     return(
-        <S.Wrapper>
+        <S.Wrapper >
             <S.HeaderWrapper>
                 <S.HeaderTitleWrapper>
                     <S.ColumnCount>{cards.length}</S.ColumnCount>
