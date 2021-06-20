@@ -7,7 +7,7 @@ export default {
             method: "get",
             headers : {
                 "Accept" : "application/vnd.github.inertia-preview+json",
-                "Authorization" : "Bearer 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"
+                "Authorization" : "Bearer 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"
             }
         })
     },
@@ -17,7 +17,7 @@ export default {
             method: 'get',
             headers : {
                 "Accept" : "application/vnd.github.inertia-preview+json",
-                "Authorization" : "Bearer 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"
+                "Authorization" : "Bearer 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"
             }
         })
     },
@@ -30,7 +30,16 @@ export default {
             },
             headers : {
                 "Accept" : "application/vnd.github.inertia-preview+json",
-                "Authorization" : "Bearer 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"
+                "Authorization" : "Bearer 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"
+            }
+        })
+    },
+    postCardMoves(card_id: string, move_id: string){
+        return request({
+            url: `project/columns/cards/${card_id}/moves`,
+            method: 'post',
+            data : {
+                postition: `after:${move_id}`
             }
         })
     }
