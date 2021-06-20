@@ -1,23 +1,44 @@
 import React from 'react';
 import * as S from './styles'
 import { AiOutlineClockCircle } from 'react-icons/ai'
+import { FC } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import { repoIdState } from 'src/libs/atom/RepoState/RepoState';
 
-const ProjectCard = () => {
+interface Props {
+    project_id: string,
+    title: string,
+    body: string,
+    update_at: string,
+}
+
+const ProjectCard: FC<Props> = ({project_id, title, body, update_at}) => {
+
+    const repoid = useRecoilState(repoIdState);
+
+    const history = useHistory();
+
+    const onRepo = () => {
+        history.push(`/${repoid[0]}/${project_id}`)
+    }
 
     return (
         <>
             <S.CardWarpper>
                 <S.CardLeft>
-                    <S.CardTitle>Test</S.CardTitle>
+                    <S.CardTitle><div onClick={onRepo}>{title}</div></S.CardTitle>
                     <S.CardDay>
-                        <a><AiOutlineClockCircle size="20"/></a>
-                        Updated 7 hours ago
+                        <AiOutlineClockCircle size="20"/>
+                        {update_at}
                     </S.CardDay>
                 </S.CardLeft>
 
                 <S.CardRigth>
                     <S.CardDescription>
-                        울려댔어 사이렌 텅빈 길거리엔 도망치다 흘린 칼자루와 피가 흥건해 우리 그때 어릴땐 뭐 몰랐지만 그냥 힘쎈 형이 젤로 멋잇는 형이었지 그땐
+                        {
+                            body ? body : "No description"
+                        }
                     </S.CardDescription>
                 </S.CardRigth>
                 

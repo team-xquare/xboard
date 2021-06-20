@@ -3,6 +3,7 @@ import ProjectBody from './ProjectBody/ProjectBody'
 import * as S from './styles'
 
 const ProjectChoice = () => {
+    
 
     return (
         <>
