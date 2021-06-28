@@ -4,6 +4,8 @@ import repos from "src/libs/api/repos";
 import BoardCard from "./BoardCard/BoardCard";
 import * as S from './styles'
 import { AiOutlinePlus } from 'react-icons/ai'
+import { Drappable } from 'react-beautiful-dnd';
+
 interface BoardProps{
     title : string,
     columns_id : number
@@ -68,7 +70,6 @@ const Board : FC<BoardProps> = ({title, columns_id}) => {
                     labels : data.labels,
                     creator : data.user.login
                 }
-                console.log(temp, "ads")
                 temp_array.push(temp)
             }else{
                 temp_array.push({ title : i.note, creator : i.creator.login})
@@ -95,18 +96,18 @@ const Board : FC<BoardProps> = ({title, columns_id}) => {
         })
     },[])
 
-    const drop = e => {
-        e.preventDefault();
-        console.log("dragEnd");
+    const handlerDrag = (e) => {
+        console.log(e)
     }
 
-    const dragOver = e => {
-        setCardId(e)
-        e.preventDefault();
+    const handlerDrop = (e) => {
+        const card_id = cards[e].card_id;
+        console.log(card_id)
+        
     }
 
     return(
-        <S.Wrapper >
+        <S.Wrapper>
             <S.HeaderWrapper>
                 <S.HeaderTitleWrapper>
                     <S.ColumnCount>{cards.length}</S.ColumnCount>
@@ -128,8 +129,13 @@ const Board : FC<BoardProps> = ({title, columns_id}) => {
                         </div>
                     </div>
                 }
+
                 {
-                    cards.map((i,index)=><BoardCard key={index} {...i}></BoardCard>)
+                    <Drappable draggableId={}>
+                        {
+                            cards.map((i,index)=><BoardCard key={index} index={index} onHandlerDrap={(e) => handlerDrag(e)} onHandlerDrop={(e) => handlerDrop(e)}{...i}></BoardCard>)
+                        }
+                    </Drappable>
                 }
             </S.BoardCardWrapper>
         </S.Wrapper>
