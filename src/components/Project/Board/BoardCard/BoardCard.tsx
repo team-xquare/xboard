@@ -46,23 +46,12 @@ interface BoardCardProps{
     onHandlerDrap: (e: any) => void
     onHandlerDrop: (e: any) => void
 }
-const BoardCard : FC<BoardCardProps> = ({onHandlerDrap, onHandlerDrop, index, card_id, title, body, labels, state, assignees, creator, id}) => {
+const BoardCard : FC<BoardCardProps> = ({title, body, labels, state, assignees, creator}) => {
     function openProfile(){
         window.open(`https://github.com/${creator}`)
     }
-
-    const onDrapOver = () => {
-        console.log("adwdes")
-    }
-
-    const onDrop = (e) => {
-        e.preventDefault();
-        console.log(index)
-        onHandlerDrop(index)
-    }
-
     return(
-        <S.Wrapper draggable="true" onDragOver={onDrapOver} onDragEnd={onDrop}>
+        <S.Wrapper draggable="true">
             <S.HeaderWrapper>
                 { state && <StateBadge state={state}></StateBadge>}
                 <h3>{title}</h3>
