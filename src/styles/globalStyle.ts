@@ -20,4 +20,7 @@ export const globalStyle = css`
     height: 100vh;
     margin: 0;
   }
+  li{
+    text-decoration: none;
+  }
 `;
