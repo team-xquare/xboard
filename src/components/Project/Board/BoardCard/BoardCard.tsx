@@ -34,19 +34,36 @@ interface assignee{
     url: string
 }
 interface BoardCardProps{
+    card_id : string
     title : string
     body? : string
     labels? : Array<label>
     state? : IssueState
     assignees? : Array<assignee>
     creator : string
+    id?: string
 }
-const BoardCard : FC<BoardCardProps> = ({title, body, labels, state, assignees, creator}) => {
+const BoardCard : FC<BoardCardProps> = ({card_id, title, body, labels, state, assignees, creator, id}) => {
     function openProfile(){
         window.open(`https://github.com/${creator}`)
     }
+
+    const dragStart = e => {
+        const target = e.target;
+
+        e.dataTransfer.setData('card_id', target.id);
+
+        setTimeout(()=> {
+            target.style.display = 'none';
+        }, 0);
+    }
+
+    const dragOver = e => {
+        e.stopPropagation();
+    }
+
     return(
-        <S.Wrapper draggable="true">
+        <S.Wrapper draggable="true" onDragStart={dragStart} onDragOver={dragOver}>
             <S.HeaderWrapper>
                 { state && <StateBadge state={state}></StateBadge>}
                 <h3>{title}</h3>
