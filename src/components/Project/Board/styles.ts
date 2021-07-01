@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import { globalColor } from 'src/styles/globalColor'
 export const Wrapper = styled.div`
     min-width: 330px;
-    height: 100%;
+    height: 500px;
     border-radius: 10px;
     //background : #f5f8fa;
     margin-right: 16px;

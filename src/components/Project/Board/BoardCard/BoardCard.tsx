@@ -43,15 +43,13 @@ interface BoardCardProps{
     assignees? : Array<assignee>
     creator : string
     id?: string
-    onHandlerDrap: (e: any) => void
-    onHandlerDrop: (e: any) => void
 }
 const BoardCard : FC<BoardCardProps> = ({title, body, labels, state, assignees, creator}) => {
     function openProfile(){
         window.open(`https://github.com/${creator}`)
     }
     return(
-        <S.Wrapper draggable="true">
+        <S.Wrapper>
             <S.HeaderWrapper>
                 { state && <StateBadge state={state}></StateBadge>}
                 <h3>{title}</h3>
