@@ -4,7 +4,9 @@ import repos from "src/libs/api/repos";
 import BoardCard from "./BoardCard/BoardCard";
 import * as S from './styles'
 import { AiOutlinePlus } from 'react-icons/ai'
-import { Drappable } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import { useRecoilState, useRecoilValue } from "recoil";
+import { cardData } from "src/libs/atom/CardDataState/CardDataState";
 
 interface BoardProps{
     title : string,
@@ -53,8 +55,10 @@ interface test{
 const Board : FC<BoardProps> = ({title, columns_id}) => {
     const [cards, setCards] = useState<test[]>([]);
     const [state, setState] = useState<boolean>(false);
-    const [note, setNote] = useState<string>(""); 
-    const [cardId, setCardId] = useState<string>("");
+    const [note, setNote] = useState<string>("");
+
+    const [totCards, setTotCards] = useRecoilState<any[]>(cardData);
+    const asdasd = useRecoilValue(cardData)
 
     async function getCards(res){
         const temp_array = [];
@@ -93,20 +97,15 @@ const Board : FC<BoardProps> = ({title, columns_id}) => {
     useEffect(()=>{
         projects.getCards(columns_id).then(async (res)=>{
             getCards(res.data)
+            const dd = [columns_id, res.data]
+            console.log(dd)
+            setTotCards([...asdasd, dd])
+            console.log([...asdasd, dd])
         })
     },[])
 
-    const handlerDrag = (e) => {
-        console.log(e)
-    }
-
-    const handlerDrop = (e) => {
-        const card_id = cards[e].card_id;
-        console.log(card_id)
-        
-    }
-
     return(
+        
         <S.Wrapper>
             <S.HeaderWrapper>
                 <S.HeaderTitleWrapper>
@@ -119,6 +118,7 @@ const Board : FC<BoardProps> = ({title, columns_id}) => {
                     </button>
                 </S.HeaderUtilWrapper>
             </S.HeaderWrapper>
+            
             <S.BoardCardWrapper>
                 {state && 
                     <div>
@@ -129,13 +129,18 @@ const Board : FC<BoardProps> = ({title, columns_id}) => {
                         </div>
                     </div>
                 }
-
                 {
-                    <Drappable draggableId={}>
-                        {
-                            cards.map((i,index)=><BoardCard key={index} index={index} onHandlerDrap={(e) => handlerDrag(e)} onHandlerDrop={(e) => handlerDrop(e)}{...i}></BoardCard>)
-                        }
-                    </Drappable>
+                    cards.map((i,index)=> (
+                        <Draggable draggableId={String(i.card_id)} index={index} key={i.card_id}>
+                            {(provided) => (
+                                <li ref={provided.innerRef} {...provided.dragHandleProps} {...provided.draggableProps}>
+                                    <BoardCard key={index} index={index} {...i} />
+                                    {provided.placeHolder}
+                                </li>
+                                
+                            )}
+                        </Draggable>
+                    ))
                 }
             </S.BoardCardWrapper>
         </S.Wrapper>
