@@ -1,9 +1,11 @@
 import { FC, useEffect, useState } from 'react';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import projects from 'src/libs/api/projects';
 import {RouteComponentProps} from 'react-router-dom'
 import Board from './Board/Board';
 import * as S from './styles'
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { cardData } from 'src/libs/atom/CardDataState/CardDataState';
 
 interface Props {
     project_id: any,
@@ -13,6 +15,8 @@ interface Props {
 const Project: FC<RouteComponentProps<Props>> = ({match}) => {
     const [columns, setColumns] = useState([])
     const [organizations, setOrganizations] = useState(null)
+    const [cards, setCards] = useRecoilState<any[]>(cardData);
+    const asd = useRecoilValue(cardData)
 
     useEffect(()=>{
         projects.getColumns(Number(match.params.project_id)).then((res)=>{
@@ -21,46 +25,45 @@ const Project: FC<RouteComponentProps<Props>> = ({match}) => {
         })
     },[]);
 
-    const handleChange = (result) => {
-        console.log("adws")
-        if (!result.destination) return;
-        console.log(result);
-        const items = [...columns];
-        const [reorderedItem] = items.splice(result.source.index, 1);
-        items.splice(result.destination.index, 0, reorderedItem);
-    
-        setColumns(items);
+    const onDragEnd = (result) => {
 
-        console.log(columns[result.destination.index-1])
-    };
+        if (!result.destination) return;
+        let location;
+        const moveCard = result.source.index;
+        const inFrontCard = result.destination.index;
+        
+        if(inFrontCard === 0){
+            location = `first`
+        } else {
+            location = `after:`
+        }
+        //console.log(location, cardData)
+        console.log(asd)
+      };
 
     return(
-        <S.Wrapper>
-            <S.BoardTitle>{organizations?.name}</S.BoardTitle>
-            
-                <DragDropContext >
-                    <Droppable droppableId="columns" onDragEnd={handleChange}>
-                        {(provided) => (
-                            <li className="columns" {...provided.droppableProps} ref={provided.innerRef}>
-                                <S.BoardWrapper>
-                                {
-                                    columns.map((i,index)=>(
-                                        <Draggable draggableId={String(i.id)} index={index}>
-                                            {(provided) => (
-                                                <li ref={provided.innerRef} {...provided.dragHandleProps} {...provided.draggableProps} >                                                
-                                                    <Board key={index} title={i.name} columns_id={i.id}></Board>
-                                                </li>
-                                            )}
-                                        </Draggable>
-                                    ))
-                                }
-                                </S.BoardWrapper>
-                                {provided.placeholder}
-                            </li>
-                        )}
-                    </Droppable>
-                </DragDropContext>
-        </S.Wrapper>
+        <DragDropContext onDragEnd={onDragEnd}>
+            <S.Wrapper>
+                <S.BoardTitle>{organizations?.name}</S.BoardTitle>
+                    <S.BoardWrapper>
+                        {
+                            columns.map((i,index)=> (
+                                <Droppable droppableId={i.name} key={i.id}>
+                                    {(provided, snapshot) => {
+                                        return (
+                                            <div {...provided.droppableProps} ref={provided.innerRef}>
+                                                <Board key={index} title={i.name} columns_id={i.id} />
+                                            </div>
+                                        )
+                                        
+                                    }}
+                                </Droppable>
+                                    
+                            ))
+                        }
+                    </S.BoardWrapper>
+            </S.Wrapper>
+        </DragDropContext>
     )
 }
 export default Project;
