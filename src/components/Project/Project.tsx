@@ -43,7 +43,7 @@ const Project: FC<RouteComponentProps<Props>> = ({match}) => {
 
     return(
         <DragDropContext onDragEnd={onDragEnd}>
-            <Droppable droppableId="ColumnList" type="ColumnListds" direction="horizontal">
+            <Droppable droppableId="ColumnList" type="Columns" direction="horizontal">
             {(provided, snapshot) => (
             <S.Wrapper {...provided.droppableProps} ref={provided.innerRef}>
                 <S.BoardTitle>{organizations?.name}</S.BoardTitle>
