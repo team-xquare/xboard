@@ -1,10 +1,11 @@
 import styled from '@emotion/styled'
 import { globalColor } from 'src/styles/globalColor'
 export const Wrapper = styled.div`
-    min-width: 330px;
+    padding-top: 5px;
+    width: 350px;
     height: 500px;
     border-radius: 10px;
-    //background : #f5f8fa;
+    background : #f5f8fa;
     margin-right: 16px;
     //border: 1px solid #e1e4e8;
 `
@@ -25,6 +26,7 @@ export const HeaderTitleWrapper = styled.div`
     }
 `
 export const HeaderUtilWrapper = styled.div`
+    padding-left: 5px;
     display: flex;
     align-items: center;
     & button{
