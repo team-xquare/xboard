@@ -127,7 +127,7 @@ const Board : FC<BoardProps> = ({title, columns_id, index}) => {
                                 </div>
                             </div>
                         }
-                        <Droppable droppableId={String(columns_id)} key={columns_id}>
+                        <Droppable droppableId={String(columns_id)} key={columns_id} type="Cards">
                         {(dropProvided, dropSnapshot) => (
                             <div style={{height: "650px"}} {...dropProvided.droppableProps} ref={dropProvided.innerRef} >
                                 {
