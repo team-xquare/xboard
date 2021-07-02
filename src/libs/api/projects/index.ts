@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import request from '../../axios';
 
 export default {
@@ -7,7 +8,7 @@ export default {
             method: "get",
             headers : {
                 "Accept" : "application/vnd.github.inertia-preview+json",
-                "Authorization" : "Bearer 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"
+                "Authorization" : "Bearer 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"
             }
         })
     },
@@ -17,7 +18,7 @@ export default {
             method: 'get',
             headers : {
                 "Accept" : "application/vnd.github.inertia-preview+json",
-                "Authorization" : "Bearer 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"
+                "Authorization" : "Bearer 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"
             }
         })
     },
@@ -30,16 +31,21 @@ export default {
             },
             headers : {
                 "Accept" : "application/vnd.github.inertia-preview+json",
-                "Authorization" : "Bearer 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"
+                "Authorization" : "Bearer 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"
             }
         })
     },
-    postCardMoves(card_id: string, move_id: string){
+    postCardMoves(card_id: any, move_id: any){
+
         return request({
-            url: `project/columns/cards/${card_id}/moves`,
+            url: `/projects/columns/cards/${card_id}/moves`,
             method: 'post',
             data : {
-                postition: `after:${move_id}`
+                position: `after:${move_id}`
+            },
+            headers : {
+                "Accept" : "application/vnd.github.inertia-preview+json",
+                "Authorization" : "Bearer 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"
             }
         })
     }
