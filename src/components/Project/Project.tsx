@@ -38,31 +38,26 @@ const Project: FC<RouteComponentProps<Props>> = ({match}) => {
             location = `after:`
         }
         //console.log(location, cardData)
-        console.log(asd)
+        console.log(result)
       };
 
     return(
         <DragDropContext onDragEnd={onDragEnd}>
-            <S.Wrapper>
+            <Droppable droppableId="ColumnList" type="ColumnListds" direction="horizontal">
+            {(provided, snapshot) => (
+            <S.Wrapper {...provided.droppableProps} ref={provided.innerRef}>
                 <S.BoardTitle>{organizations?.name}</S.BoardTitle>
-                    <S.BoardWrapper>
-                        {
-                            columns.map((i,index)=> (
-                                <Droppable droppableId={i.name} key={i.id}>
-                                    {(provided, snapshot) => {
-                                        return (
-                                            <div {...provided.droppableProps} ref={provided.innerRef}>
-                                                <Board key={index} title={i.name} columns_id={i.id} />
-                                            </div>
-                                        )
-                                        
-                                    }}
-                                </Droppable>
-                                    
-                            ))
-                        }
-                    </S.BoardWrapper>
+                <S.BoardWrapper>
+                    {
+                        columns.map((i,index)=> (
+                            <Board key={index} title={i.name} columns_id={i.id} index={index}/>
+                        )) 
+                    }
+                </S.BoardWrapper>
+                {provided.placeholder}
             </S.Wrapper>
+            )}
+            </Droppable>
         </DragDropContext>
     )
 }
