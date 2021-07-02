@@ -10,7 +10,8 @@ import { cardData } from "src/libs/atom/CardDataState/CardDataState";
 
 interface BoardProps{
     title : string,
-    columns_id : number
+    columns_id : number,
+    index: number
 }
 type IssueState = "open" | "close"
 interface label{
@@ -52,7 +53,7 @@ interface test{
     creator : string
 }
 
-const Board : FC<BoardProps> = ({title, columns_id}) => {
+const Board : FC<BoardProps> = ({title, columns_id, index}) => {
     const [cards, setCards] = useState<test[]>([]);
     const [state, setState] = useState<boolean>(false);
     const [note, setNote] = useState<string>("");
@@ -97,53 +98,61 @@ const Board : FC<BoardProps> = ({title, columns_id}) => {
     useEffect(()=>{
         projects.getCards(columns_id).then(async (res)=>{
             getCards(res.data)
-            const dd = [columns_id, res.data]
-            console.log(dd)
-            setTotCards([...asdasd, dd])
-            console.log([...asdasd, dd])
         })
     },[])
 
     return(
-        
-        <S.Wrapper>
-            <S.HeaderWrapper>
-                <S.HeaderTitleWrapper>
-                    <S.ColumnCount>{cards.length}</S.ColumnCount>
-                    <h3>{title}</h3>
-                </S.HeaderTitleWrapper>
-                <S.HeaderUtilWrapper>
-                    <button onClick={openModal}>
-                        <AiOutlinePlus ></AiOutlinePlus>
-                    </button>
-                </S.HeaderUtilWrapper>
-            </S.HeaderWrapper>
-            
-            <S.BoardCardWrapper>
-                {state && 
-                    <div>
-                        <textarea onChange={(e)=>setNote(e.target.value)} value={note}></textarea>
-                        <div>
-                            <div onClick={createNote}>Add</div>
-                            <div>Cancel</div>
-                        </div>
-                    </div>
-                }
-                {
-                    cards.map((i,index)=> (
-                        <Draggable draggableId={String(i.card_id)} index={index} key={i.card_id}>
-                            {(provided) => (
-                                <li ref={provided.innerRef} {...provided.dragHandleProps} {...provided.draggableProps}>
-                                    <BoardCard key={index} index={index} {...i} />
-                                    {provided.placeHolder}
-                                </li>
-                                
-                            )}
-                        </Draggable>
-                    ))
-                }
-            </S.BoardCardWrapper>
-        </S.Wrapper>
+        <Draggable draggableId={title} index={index} key={title}>
+            {(provided, snapshot) => (
+                <S.Wrapper ref={provided.innerRef} {...provided.draggableProps}>
+                    <S.HeaderWrapper {...provided.dragHandleProps}>
+                        <S.HeaderTitleWrapper>
+                            <S.ColumnCount>{cards.length}</S.ColumnCount>
+                            <h3>{title}</h3>
+                        </S.HeaderTitleWrapper>
+                        <S.HeaderUtilWrapper>
+                            <button onClick={openModal}>
+                                <AiOutlinePlus ></AiOutlinePlus>
+                            </button>
+                        </S.HeaderUtilWrapper>
+                    </S.HeaderWrapper>
+                    
+                    <S.BoardCardWrapper>
+                        {state && 
+                            <div>
+                                <textarea onChange={(e)=>setNote(e.target.value)} value={note}></textarea>
+                                <div>
+                                    <div onClick={createNote}>Add</div>
+                                    <div>Cancel</div>
+                                </div>
+                            </div>
+                        }
+                        <Droppable droppableId={String(columns_id)} key={columns_id}>
+                        {(dropProvided, dropSnapshot) => (
+                            <div style={{height: "650px"}} {...dropProvided.droppableProps} ref={dropProvided.innerRef} >
+                                {
+                                    cards.map((i, indexTwo) => {
+                                        return (
+                                            <Draggable key={i.card_id} draggableId={String(i.card_id)} index={indexTwo}>
+                                                {(provided) => {
+                                                    return (
+                                                        <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                                                            <BoardCard key={indexTwo} index={indexTwo} {...i} />
+                                                        </div>
+                                                    )
+                                                }}
+                                            </Draggable>
+                                        )
+                                    })
+                                }
+                                {provided.placeholder}
+                            </div>
+                        )}
+                        </Droppable>
+                    </S.BoardCardWrapper>
+                </S.Wrapper>
+            )}
+        </Draggable>
     )
 }
 export default Board;
