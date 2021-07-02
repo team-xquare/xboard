@@ -30,6 +30,7 @@ export const HeaderWrapper = styled.div`
     display: flex;
     align-items: center;
     & h3{
+        width: 270px;
         font-size: 14px;
     }
 `
