@@ -48,5 +48,18 @@ export default {
                 "Authorization" : "Bearer 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"
             }
         })
+    },
+    postColumnMoves(column_id: any, move_id: any){
+        return request({
+            url: `/projects/columns/${column_id}/moves`,
+            method: 'post',
+            data: {
+                position: `after:${move_id}`
+            },
+            headers: {
+                "Accept" : "application/vnd.github.inertia-preview+json",
+                "Authorization" : "Bearer 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"
+            }
+        })
     }
 }
