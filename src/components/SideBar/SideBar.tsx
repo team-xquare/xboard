@@ -39,22 +39,27 @@ const SideBar = () => {
         history.push(`/${repo_id}`);
         setRepoId(repo_id)
         //window.location.hash="/project1";
-        // 레포지토리 아이디만 recoil로 넘기도록 바꿔야함
+        //레포지토리 아이디만 recoil로 넘기도록 바꿔야함
+    }
+
+    const onLogin= () => {
+        const url = `https://github.com/login/oauth/authorize?client_id=5501c893e29dcc08c38f&redirect_uri=http://localhost:3000/callback`
+        window.open(url);
     }
 
     return (
         <>
             <S.SideBarWrapper>
                 <S.SideBarTitle> <div onClick={orgProject}>team-xquare</div></S.SideBarTitle>
+                <div onClick={onLogin}>login</div>
                 <S.RepositoryList>
                     {
                         data.map((data,i) => {
                             return (
                                 <S.Repository>
                                     {
-                                        <div onClick={()=>repoProject(data.name, data.id)} key={i} >{data.name}</div>
+                                        <div onClick={()=>repoProject(data.name, data.id)} key={data.id} >{data.name}</div>
                                     }
-                                    
                                 </S.Repository>
                             )
                         })
