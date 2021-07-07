@@ -43,8 +43,7 @@ const SideBar = () => {
     }
 
     const onLogin= () => {
-        const url = `https://github.com/login/oauth/authorize?client_id=5501c893e29dcc08c38f&redirect_uri=http://localhost:3000/callback`
-        window.open(url);
+        window.location.href=`https://github.com/login/oauth/authorize?client_id=5501c893e29dcc08c38f&redirect_uri=http://localhost:3000/callback`
     }
 
     return (
