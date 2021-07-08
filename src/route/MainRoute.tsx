@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Project, ProjectChoice, SideBar, Callback } from 'src/components';
 
 function MainRoute() {
