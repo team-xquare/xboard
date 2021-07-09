@@ -6,6 +6,7 @@ import Board from './Board/Board';
 import * as S from './styles'
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { cardData } from 'src/libs/atom/CardDataState/CardDataState';
+import { DndData } from 'src/libs/function/DndData/DndData';
 
 interface Props {
     project_id: any,
@@ -29,16 +30,16 @@ const Project: FC<RouteComponentProps<Props>> = ({match}) => {
 
         if (!result.destination) return;
         let location;
-        const moveCard = result.source.index;
-        const inFrontCard = result.destination.index;
-        
-        if(inFrontCard === 0){
-            location = `first`
-        } else {
-            location = `after:`
+        const infrontDnd = result.source.index;
+        const afterDnd = result.destination.index;
+
+        if(result.type === "Columns") {
+            location = DndData(infrontDnd, afterDnd, columns)
+        } else if(result.type === "Cards") {
+            console.log('cards', result)
         }
-        //console.log(location, cardData)
-        console.log(result)
+        
+        console.log(location, result)
       };
 
     return(
