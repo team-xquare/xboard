@@ -7,7 +7,7 @@ export default {
             method: "get",
             headers : {
                 "Accept" : "application/vnd.github.inertia-preview+json",
-                "Authorization" : "Bearer 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"
+                "Authorization" : `Bearer ${localStorage.getItem('access_token')}`
             }
         })
     },
