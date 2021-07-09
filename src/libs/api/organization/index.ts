@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import request from '../../axios';
 const org = "team-xquare"
 
@@ -7,7 +8,7 @@ export default {
           url: ``,
           method: "get",
         });
-      },
+    },
     getOrgRepos(){
         return request({
             url: `/orgs/${org}/repos?per_page=`,
@@ -29,7 +30,7 @@ export default {
             method: "get",
             headers: {
                 "Accept": "application/vnd.github.inertia-preview+json",
-                "Authorization" : "Bearer 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"
+                "Authorization" : `Bearer ${localStorage.getItem('access_token')}`
             }
         })
     }
