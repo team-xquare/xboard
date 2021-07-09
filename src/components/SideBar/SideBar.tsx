@@ -51,7 +51,7 @@ const SideBar = () => {
         <>
             <S.SideBarWrapper>
                 {
-                    !localStorage.getItem('access_token') && <S.Login onClick={onLogin}>Github로 계속하기</S.Login>
+                    !localStorage.getItem('access_token') && <S.Login onClick={onLogin}>Github로 로그인</S.Login>
                 }
                 <S.SideBarTitle> <div onClick={orgProject}>team-xquare</div></S.SideBarTitle>
                 <S.RepositoryList>
