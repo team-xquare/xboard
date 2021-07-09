@@ -8,7 +8,7 @@ export default {
             method: "get",
             headers : {
                 "Accept" : "application/vnd.github.inertia-preview+json",
-                "Authorization" : "Bearer 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"
+                "Authorization" : `Bearer ${localStorage.getItem('access_token')}`
             }
         })
     },
@@ -18,7 +18,7 @@ export default {
             method: 'get',
             headers : {
                 "Accept" : "application/vnd.github.inertia-preview+json",
-                "Authorization" : "Bearer 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"
+                "Authorization" : `Bearer ${localStorage.getItem('access_token')}`
             }
         })
     },
@@ -31,7 +31,7 @@ export default {
             },
             headers : {
                 "Accept" : "application/vnd.github.inertia-preview+json",
-                "Authorization" : "Bearer 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"
+                "Authorization" : `Bearer ${localStorage.getItem('access_token')}`
             }
         })
     },
@@ -45,7 +45,7 @@ export default {
             },
             headers : {
                 "Accept" : "application/vnd.github.inertia-preview+json",
-                "Authorization" : "Bearer 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"
+                "Authorization" : `Bearer ${localStorage.getItem('access_token')}`
             }
         })
     },
@@ -58,7 +58,7 @@ export default {
             },
             headers: {
                 "Accept" : "application/vnd.github.inertia-preview+json",
-                "Authorization" : "Bearer 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"
+                "Authorization" : `Bearer ${localStorage.getItem('access_token')}`
             }
         })
     }
