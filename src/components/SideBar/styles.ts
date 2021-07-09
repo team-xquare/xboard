@@ -9,6 +9,18 @@ export const SideBarWrapper = styled.div`
     background-color: ${globalColor.gray};
 `
 
+export const Login = styled.div`
+    width: 200px;
+    height: 50px;
+    padding: 12px;
+    text-align: center;
+    border-radius: 6px;
+    background-color: black;
+    color: white;
+    margin: auto;
+    margin-top: 10px;
+`
+
 export const SideBarTitle = styled.div`
     font-size: 23px;
     padding: 17px;
