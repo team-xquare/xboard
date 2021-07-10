@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import projects from 'src/libs/api/projects';
-import {RouteComponentProps} from 'react-router-dom'
+import { RouteComponentProps } from 'react-router-dom'
 import Board from './Board/Board';
 import * as S from './styles'
 import { useRecoilState, useRecoilValue } from 'recoil';
@@ -35,6 +35,10 @@ const Project: FC<RouteComponentProps<Props>> = ({match}) => {
 
         if(result.type === "Columns") {
             location = DndData(infrontDnd, afterDnd, columns)
+            projects.postColumnMoves(columns[infrontDnd].id, location)
+            .then((res) => {
+                console.log(res)
+            })
         } else if(result.type === "Cards") {
             console.log('cards', result)
         }
