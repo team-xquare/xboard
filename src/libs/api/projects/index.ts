@@ -35,13 +35,13 @@ export default {
             }
         })
     },
-    postCardMoves(card_id: any, move_id: any){
+    postCardMoves(card_id: any, location: string){
 
         return request({
             url: `/projects/columns/cards/${card_id}/moves`,
             method: 'post',
             data : {
-                position: `after:${move_id}`
+                position: location
             },
             headers : {
                 "Accept" : "application/vnd.github.inertia-preview+json",
@@ -49,12 +49,13 @@ export default {
             }
         })
     },
-    postColumnMoves(column_id: any, move_id: any){
+    postColumnMoves(column_id: any, location: string){
+        console.log(column_id, location)
         return request({
             url: `/projects/columns/${column_id}/moves`,
             method: 'post',
             data: {
-                position: `after:${move_id}`
+                position: location
             },
             headers: {
                 "Accept" : "application/vnd.github.inertia-preview+json",
