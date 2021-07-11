@@ -58,9 +58,8 @@ const Board : FC<BoardProps> = ({title, columns_id, index}) => {
     const [state, setState] = useState<boolean>(false);
     const [note, setNote] = useState<string>("");
 
-    const [totCards, setTotCards] = useRecoilState<any[]>(cardData);
-    const asdasd = useRecoilValue(cardData)
-
+    const [totCards, setTotCards] = useRecoilState<any>(cardData);
+    
     async function getCards(res){
         const temp_array = [];
         for(const i of res){
@@ -81,6 +80,7 @@ const Board : FC<BoardProps> = ({title, columns_id, index}) => {
             }
         }
         setCards(temp_array)
+        setTotCards([...totCards, columns_id])
     }
     function openModal(){
         setState(!state);
@@ -98,6 +98,7 @@ const Board : FC<BoardProps> = ({title, columns_id, index}) => {
     useEffect(()=>{
         projects.getCards(columns_id).then(async (res)=>{
             getCards(res.data)
+            console.log()
         })
     },[])
 
@@ -130,6 +131,7 @@ const Board : FC<BoardProps> = ({title, columns_id, index}) => {
                         <Droppable droppableId={String(columns_id)} key={columns_id} type="Cards">
                         {(dropProvided, dropSnapshot) => (
                             <div style={{height: "650px"}} {...dropProvided.droppableProps} ref={dropProvided.innerRef} >
+                                
                                 {
                                     cards.map((i, indexTwo) => {
                                         return (
