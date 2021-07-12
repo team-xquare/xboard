@@ -76,11 +76,11 @@ const Board : FC<BoardProps> = ({title, columns_id, index}) => {
                 }
                 temp_array.push(temp)
             }else{
-                temp_array.push({ title : i.note, creator : i.creator.login})
+                temp_array.push({ title : i.note, creator : i.creator.login, card_id: i.id})
             }
         }
         setCards(temp_array)
-        setTotCards([...totCards, columns_id])
+        console.log(temp_array)
     }
     function openModal(){
         setState(!state);
@@ -98,7 +98,6 @@ const Board : FC<BoardProps> = ({title, columns_id, index}) => {
     useEffect(()=>{
         projects.getCards(columns_id).then(async (res)=>{
             getCards(res.data)
-            console.log()
         })
     },[])
 
