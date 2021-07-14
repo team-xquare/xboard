@@ -35,14 +35,13 @@ interface assignee{
 }
 interface BoardCardProps{
     index: number
-    card_id : string
+    id : string
     title : string
     body? : string
     labels? : Array<label>
     state? : IssueState
     assignees? : Array<assignee>
     creator : string
-    id?: string
 }
 const BoardCard : FC<BoardCardProps> = ({title, body, labels, state, assignees, creator}) => {
     function openProfile(){
