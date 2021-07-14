@@ -16,8 +16,7 @@ interface Props {
 const Project: FC<RouteComponentProps<Props>> = ({match}) => {
     const [columns, setColumns] = useState([])
     const [organizations, setOrganizations] = useState(null)
-    const [cards, setCards] = useRecoilState<any[]>(cardData);
-    const asd = useRecoilValue(cardData)
+    const [totcards, setTotCards] = useRecoilState<any[]>(cardData);
 
     useEffect(()=>{
         projects.getColumns(Number(match.params.project_id)).then((res)=>{
@@ -34,16 +33,24 @@ const Project: FC<RouteComponentProps<Props>> = ({match}) => {
         const afterDnd = result.destination.index;
 
         if(result.type === "Columns") {
-            location = DndData(infrontDnd, afterDnd, columns)
-            projects.postColumnMoves(columns[infrontDnd].id, location)
-            .then((res) => {
-                console.log(res)
-            })
+            if(infrontDnd !== afterDnd){
+                location = DndData(result.type,infrontDnd, afterDnd, columns)
+                console.log(location)
+                // projects.postColumnMoves(columns[infrontDnd].id, location)
+                // .then((res) => {
+                //     console.log(res)
+                // })
+            }
         } else if(result.type === "Cards") {
-            console.log('cards', result)
+            const cardsData = totcards.slice(1);
+            const afterCardMoveData = cardsData.filter((i) => (i[0] === parseInt(result.destination.droppableId)))
+            const sliceData = afterCardMoveData[0].slice(1)
+            console.log(sliceData)
+            console.log(DndData(result.type, infrontDnd, afterDnd, sliceData))
         }
-        
-        console.log(location, result)
+
+
+        console.log(result.type, result)
       };
 
     return(
