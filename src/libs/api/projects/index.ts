@@ -35,13 +35,14 @@ export default {
             }
         })
     },
-    postCardMoves(card_id: any, location: string){
+    postCardMoves(card_id: number, location: string, column_id: number){
 
         return request({
             url: `/projects/columns/cards/${card_id}/moves`,
             method: 'post',
             data : {
-                position: location
+                position: location,
+                column_id: column_id
             },
             headers : {
                 "Accept" : "application/vnd.github.inertia-preview+json",
