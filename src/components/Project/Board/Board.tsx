@@ -44,7 +44,7 @@ interface assignee{
     url: string
 }
 interface test{
-    card_id: string
+    id: string
     title : string
     body? : string
     labels? : Array<label>
@@ -66,7 +66,7 @@ const Board : FC<BoardProps> = ({title, columns_id, index}) => {
             if(!i.note){
                 const { data } = await repos.getIssues(i.content_url);
                 const temp : test = {
-                    card_id: i.id,
+                    id: i.id,
                     title : data.title,
                     body : data.body,
                     state : data.state,
@@ -76,15 +76,19 @@ const Board : FC<BoardProps> = ({title, columns_id, index}) => {
                 }
                 temp_array.push(temp)
             }else{
-                temp_array.push({ title : i.note, creator : i.creator.login, card_id: i.id})
+                temp_array.push({ title : i.note, creator : i.creator.login, id: i.id})
             }
         }
         setCards(temp_array)
-        console.log(temp_array)
     }
     function openModal(){
         setState(!state);
     }
+    useEffect(()=>{
+        const data = {columns_id: columns_id}
+        setTotCards([...totCards , [columns_id, ...cards]])
+    },[cards])
+
     async function createNote(){
         try {
             await projects.createCard(columns_id, note)
@@ -95,6 +99,7 @@ const Board : FC<BoardProps> = ({title, columns_id, index}) => {
             alert(e)
         }
     }
+
     useEffect(()=>{
         projects.getCards(columns_id).then(async (res)=>{
             getCards(res.data)
@@ -134,7 +139,7 @@ const Board : FC<BoardProps> = ({title, columns_id, index}) => {
                                 {
                                     cards.map((i, indexTwo) => {
                                         return (
-                                            <Draggable key={i.card_id} draggableId={String(i.card_id)} index={indexTwo}>
+                                            <Draggable key={i.id} draggableId={String(i.id)} index={indexTwo}>
                                                 {(provided) => {
                                                     return (
                                                         <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
