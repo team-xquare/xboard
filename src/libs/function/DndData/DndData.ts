@@ -1,8 +1,9 @@
-export const DndData = (infrontData, AfterData, data) => {
+export const DndData = (type, infrontData, AfterData, data:any[]) => {
+    console.log(data)
     if(AfterData === 0){
-        return `first`
+        return type === 'Columns' ? `first` : `top`
     } else if(AfterData === data.length-1) {
-        return `last`
+        return type === 'Columns' ? `last` : `bottom`
     } else if(AfterData > infrontData){
         return `after:${data[AfterData].id}`
     } else {
