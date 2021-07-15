@@ -28,7 +28,7 @@ const Callback = () => {
     
   }, [location, history]);
   return (
-    <div>asdwa</div>
+    <div>로그인중</div>
   )
 }
 
